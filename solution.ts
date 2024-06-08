@@ -1,9 +1,4 @@
-enum Direction {
-  UP = 'UP',
-  DOWN = 'DOWN',
-  LEFT = 'LEFT',
-  RIGHT = 'RIGHT',
-}
+import { Direction } from "./direction.enum";
 
 function traverseMap(map: string[][]): { letters: string[], path: string } | string {
   const collectedLetters: string[] = [];
