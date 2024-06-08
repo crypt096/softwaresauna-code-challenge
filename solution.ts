@@ -3,8 +3,9 @@ import { Direction } from "./direction.enum";
 function traverseMap(map: string[][]): { letters: string[], path: string } | string {
   const collectedLetters: string[] = [];
   let path = '';
-  let startRow = -1;
-  let startCol = -1;
+
+  let startRow: number = -1;
+  let startCol: number = -1;
 
   // Find starting point
   for (let i = 0; i < map.length; i++) {
