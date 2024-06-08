@@ -1,4 +1,9 @@
-import Direction from './direction.type';
+enum Direction {
+  UP = 'UP',
+  DOWN = 'DOWN',
+  LEFT = 'LEFT',
+  RIGHT = 'RIGHT',
+}
 
 function traverseMap(map: string[][]): { letters: string[], path: string } | string {
   const collectedLetters: string[] = [];
@@ -23,7 +28,7 @@ function traverseMap(map: string[][]): { letters: string[], path: string } | str
 
   let currentRow = startRow;
   let currentCol = startCol;
-  let direction = Direction.Right;
+  let direction = Direction.RIGHT;
 
   while (true) {
     const currentChar = map[currentRow][currentCol];
@@ -50,16 +55,16 @@ function traverseMap(map: string[][]): { letters: string[], path: string } | str
 
     // Move to next position
     switch (direction) {
-      case Direction.Up:
+      case Direction.UP:
         currentRow--;
         break;
-      case Direction.Down:
+      case Direction.DOWN:
         currentRow++;
         break;
-      case Direction.Left:
+      case Direction.LEFT:
         currentCol--;
         break;
-      case Direction.Right:
+      case Direction.RIGHT:
         currentCol++;
         break;
     }
@@ -88,20 +93,20 @@ function getNextDirection(row: number, col: number, currentDirection: Direction,
   const rightChar = col < map[row].length - 1 ? map[row][col + 1] : '';
 
   switch (currentDirection) {
-    case Direction.Up:
-    case Direction.Down:
+    case Direction.UP:
+    case Direction.DOWN:
       if (leftChar === '-' || isLetter(leftChar)) {
-        return Direction.Left;
+        return Direction.LEFT;
       } else if (rightChar === '-' || isLetter(rightChar)) {
-        return Direction.Right;
+        return Direction.RIGHT;
       }
       break;
-    case Direction.Left:
-    case Direction.Right:
+    case Direction.LEFT:
+    case Direction.RIGHT:
       if (upChar === '|' || isLetter(upChar)) {
-        return Direction.Up;
+        return Direction.UP;
       } else if (downChar === '|' || isLetter(downChar)) {
-        return Direction.Down;
+        return Direction.DOWN;
       }
       break;
   }
