@@ -1,13 +1,7 @@
 import { ASCIIMap } from './asciimap.class';
 import { Step } from './pathfinder.class';
 import { Position } from './position.interface';
-
-export enum EDirection {
-	up,
-	down,
-	left,
-	right
-}
+import { Direction } from './direction.enum';
 
 export class StepFinder {
 	private readonly startCharacter: string = '@';
@@ -17,11 +11,11 @@ export class StepFinder {
 	private readonly verticalDirectionCharacter: string = '|';
 	private readonly noPathCharacter: string = ' ';
 
-	private findPossibleDirections(map: ASCIIMap, step: Step): EDirection[] {
+	private findPossibleDirections(map: ASCIIMap, step: Step): Direction[] {
 		const characterAtPosition = map.getCharacterAtPosition(map, step.position);
 		switch (characterAtPosition) {
 			case this.startCharacter:
-				return [EDirection.up, EDirection.down, EDirection.left, EDirection.right];
+				return [Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT];
 
 			case this.horizontalDirectionCharacter:
 			case this.verticalDirectionCharacter:
@@ -37,39 +31,39 @@ export class StepFinder {
 		}
 	}
 
-	private turnCorner(direction: EDirection): EDirection[] {
+	private turnCorner(direction: Direction): Direction[] {
 		switch (direction) {
-			case EDirection.left:
-			case EDirection.right:
-				return [EDirection.up, EDirection.down];
+			case Direction.LEFT:
+			case Direction.RIGHT:
+				return [Direction.UP, Direction.DOWN];
 
-			case EDirection.up:
-			case EDirection.down:
-				return [EDirection.left, EDirection.right];
+			case Direction.UP:
+			case Direction.DOWN:
+				return [Direction.LEFT, Direction.RIGHT];
 		}
 	}
 
-	private findNextPositionBasedOnDirection(startPosition: Position, direction: EDirection): Position {
+	private findNextPositionBasedOnDirection(startPosition: Position, direction: Direction): Position {
 		switch (direction) {
-			case EDirection.left:
+			case Direction.LEFT:
 				return {
 					x: startPosition.x - 1,
 					y: startPosition.y
 				};
 
-			case EDirection.right:
+			case Direction.RIGHT:
 				return {
 					x: startPosition.x + 1,
 					y: startPosition.y
 				};
 
-			case EDirection.up:
+			case Direction.UP:
 				return {
 					x: startPosition.x,
 					y: startPosition.y - 1
 				};
 
-			case EDirection.down:
+			case Direction.DOWN:
 				return {
 					x: startPosition.x,
 					y: startPosition.y + 1
@@ -86,7 +80,7 @@ export class StepFinder {
 		return isPositionWithinMap && isPathCharacter;
 	}
 
-	private parsePotentialSteps(potentialSteps: Step[], currentDirection: EDirection): Step {
+	private parsePotentialSteps(potentialSteps: Step[], currentDirection: Direction): Step {
 		if (potentialSteps && potentialSteps.length === 1) {
 			return potentialSteps[0];
 		} else if (potentialSteps && potentialSteps.length > 1) {
@@ -100,7 +94,7 @@ export class StepFinder {
 		}
 	}
 
-	private formatStep(map: ASCIIMap, position: Position, direction: EDirection): Step {
+	private formatStep(map: ASCIIMap, position: Position, direction: Direction): Step {
 		const nextPositionBasedOnDirection = this.findNextPositionBasedOnDirection(position, direction);
 		return {
 			position: nextPositionBasedOnDirection,
@@ -116,7 +110,7 @@ export class StepFinder {
 		}
 
 		const potentialSteps = this.findPossibleDirections(map, currentStep)
-			.map<Step>((direction: EDirection) => this.formatStep(map, currentStep.position, direction))
+			.map<Step>((direction: Direction) => this.formatStep(map, currentStep.position, direction))
 			.filter((s: Step) => this.isValidPosition(map, s.position));
 
 		return this.parsePotentialSteps(potentialSteps, currentStep.direction);
