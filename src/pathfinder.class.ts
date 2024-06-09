@@ -1,13 +1,6 @@
 import { ASCIIMap } from './asciimap.class';
 import { StepFinder } from './stepfinder.class';
-import { Position } from './position.interface';
-import { Direction } from './direction.enum';
-
-export interface Step {
-	position: Position;
-	direction: Direction;
-	char: string;
-}
+import { Step } from './step.interface';
 
 export class Pathfinder {
 	private path: Step[];

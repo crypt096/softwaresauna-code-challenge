@@ -1,5 +1,5 @@
 import { ASCIIMap } from './asciimap.class';
-import { Step } from './pathfinder.class';
+import { Step } from './step.interface';
 import { Position } from './position.interface';
 import { Direction } from './direction.enum';
 
