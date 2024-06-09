@@ -88,9 +88,9 @@ export class StepFinder {
 					throw new Error('Fork in path');
 				}
 		} else {
-				return null;
+			return null;
 		}
-}
+	}
 
 	private formatStep(map: ASCIIMap, position: Position, direction: Direction): Step {
 		const nextPositionBasedOnDirection = this.findNextPositionBasedOnDirection(position, direction);
