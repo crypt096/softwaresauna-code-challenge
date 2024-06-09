@@ -44,9 +44,11 @@ export class Pathfinder {
 		const startCharacterPosition = map.findCharacterPosition(map, this.startCharacter);
 		const endCharacterPosition = map.findCharacterPosition(map, this.endCharacter);
 		if (startCharacterPosition.length === 0) {
-			throw Error('Invalid map - Start character not found on map');
+			throw Error('Invalid map - Start character not found');
+		} else if (endCharacterPosition.length === 0) {
+			throw Error('Invalid map - End character not found');
 		} else if (startCharacterPosition.length > 1) {
-			throw Error('Invalid map - Multiple start characters found on map');
+			throw Error('Invalid map - Multiple start characters found');
 		}
 
 		return this.getNextPath(map, null);
