@@ -43,6 +43,7 @@ export class Pathfinder {
 	private findPath(map: ASCIIMap): Step[] {
 		const startCharacterPosition = map.findCharacterPosition(map, this.startCharacter);
 		const endCharacterPosition = map.findCharacterPosition(map, this.endCharacter);
+
 		if (startCharacterPosition.length === 0) {
 			throw Error('Invalid map - Start character not found');
 		} else if (endCharacterPosition.length === 0) {
