@@ -7,6 +7,7 @@ export class Pathfinder {
 	private map: ASCIIMap;
 	private stepFinder: StepFinder;
 	private readonly startCharacter: string = '@';
+	private readonly endCharacter: string = 'x';
 	private readonly validAlphaCharacterRegExp: RegExp = new RegExp('^(?![xX])[A-Za-z]$');
 
 	constructor(mapString: string) {
@@ -41,6 +42,7 @@ export class Pathfinder {
 
 	private findPath(map: ASCIIMap): Step[] {
 		const startCharacterPosition = map.findCharacterPosition(map, this.startCharacter);
+		const endCharacterPosition = map.findCharacterPosition(map, this.endCharacter);
 		if (startCharacterPosition.length === 0) {
 			throw Error('Invalid map - Start character not found on map');
 		} else if (startCharacterPosition.length > 1) {
