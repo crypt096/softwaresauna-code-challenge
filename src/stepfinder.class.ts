@@ -84,7 +84,6 @@ export class StepFinder {
 		if (potentialSteps && potentialSteps.length === 1) {
 			return potentialSteps[0];
 		} else if (potentialSteps && potentialSteps.length > 1) {
-			console.log(potentialSteps)
 			if (potentialSteps[0].char === potentialSteps[1].char) {
 				throw new Error();
 			}
