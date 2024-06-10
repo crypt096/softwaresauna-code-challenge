@@ -1,14 +1,10 @@
 import { Pathfinder } from './pathfinder.class';
 
 const exampleMap = `
-     +-O-N-+
-     |     |
-     |   +-I-+
- @-G-O-+ | | |
-     | | +-+ E
-     +-+     S
-             |
-             x
+   @--A-+
+        |
+        
+        B-x
 `;
 
 try {
