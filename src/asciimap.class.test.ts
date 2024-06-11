@@ -104,4 +104,38 @@ describe('ASCIIMap class', () => {
 
 		});
 	});
+
+  describe('function findCharacterPosition', () => {
+
+		test('should return array of character positions', () => {
+			const mapData = `--@--\n-x----`;
+			const asciiMap = new ASCIIMap(mapData);
+			const characterPosition = asciiMap.findCharacterPosition(asciiMap, '@');
+			expect(characterPosition).toBeInstanceOf(Array);
+			expect(characterPosition.length).toBe(1);
+			expect(characterPosition[0].x).toBe(2);
+			expect(characterPosition[0].y).toBe(0);
+		});
+
+		test('should return all character positions', () => {
+			const mapData = `--@--\n-@----`;
+			const asciiMap = new ASCIIMap(mapData);
+			const characterPosition = asciiMap.findCharacterPosition(asciiMap, '@');
+			expect(characterPosition).toBeInstanceOf(Array);
+			expect(characterPosition.length).toBe(2);
+			expect(characterPosition[0].x).toBe(2);
+			expect(characterPosition[0].y).toBe(0);
+			expect(characterPosition[1].x).toBe(1);
+			expect(characterPosition[1].y).toBe(1);
+		});
+
+		test('should return empty array if character not found', () => {
+			const mapData = `--x--\n-x----`;
+			const asciiMap = new ASCIIMap(mapData);
+			const characterPosition = asciiMap.findCharacterPosition(asciiMap, '@');
+			expect(characterPosition).toBeInstanceOf(Array);
+			expect(characterPosition.length).toBe(0);
+		});
+
+	});
 });
