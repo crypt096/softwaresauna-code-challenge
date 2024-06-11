@@ -35,16 +35,17 @@ export class ASCIIMap {
 	public findCharacterPosition(map: ASCIIMap, char: string): Position[] {
 		return map.mapMatrix.reduce(
 			(acc, row, rowIndex) => {
-				const indexOfStartCharacter = row.indexOf(char);
-				if (indexOfStartCharacter >= 0) {
-					acc.push({
-						x: indexOfStartCharacter,
-						y: rowIndex
-					});
-				}
-				return acc;
+					let indexOfChar = row.indexOf(char);
+					while (indexOfChar !== -1) {
+							acc.push({
+									x: indexOfChar,
+									y: rowIndex
+							});
+							indexOfChar = row.indexOf(char, indexOfChar + 1);
+					}
+					return acc;
 			},
 			[] as Position[]
-		);
+	);
 	}
 }
