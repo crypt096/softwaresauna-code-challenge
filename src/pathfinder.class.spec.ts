@@ -116,7 +116,7 @@ describe('Pathfinder class', () => {
 
 		test('should throw error if map has fork in path', () => {
 			const pathfinder1 = new Pathfinder(invalidMap4);
-			const error = Error('Invalid map - Fork in path!');
+			const error = Error('Invalid map - Fork in path');
 			expect(() => pathfinder1.PathString).toThrow(error);
 		});
 	});
@@ -159,7 +159,7 @@ describe('Pathfinder class', () => {
 
 		test('should throw error if map has fork in path', () => {
 			const pathfinder1 = new Pathfinder(invalidMap4);
-			const error = Error('Invalid map - Fork in path!');
+			const error = Error('Invalid map - Fork in path');
 			expect(() => pathfinder1.PathString).toThrow(error);
 		});
 	});
