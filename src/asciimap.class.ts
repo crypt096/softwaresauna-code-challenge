@@ -35,15 +35,15 @@ export class ASCIIMap {
 	public findCharacterPosition(map: ASCIIMap, char: string): Position[] {
 		return map.mapMatrix.reduce(
 			(acc, row, rowIndex) => {
-					row.join('').split('').forEach((currentChar, colIndex) => {
-							if (currentChar === char) {
-									acc.push({
-											x: colIndex,
-											y: rowIndex
-									});
-							}
+				const indexOfStartCharacter = row.indexOf(char);
+				if (indexOfStartCharacter >= 0) {
+					console.log(`Found character ${char} at position ${rowIndex},${indexOfStartCharacter}`);
+					acc.push({
+						x: indexOfStartCharacter,
+						y: rowIndex
 					});
-					return acc;
+				}
+				return acc;
 			},
 			[] as Position[]
 	);
