@@ -37,7 +37,6 @@ export class ASCIIMap {
 			(acc, row, rowIndex) => {
 				const indexOfStartCharacter = row.indexOf(char);
 				if (indexOfStartCharacter >= 0) {
-					console.log(`Found character ${char} at position ${rowIndex},${indexOfStartCharacter}`);
 					acc.push({
 						x: indexOfStartCharacter,
 						y: rowIndex
