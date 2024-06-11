@@ -72,7 +72,7 @@ describe('Pathfinder class', () => {
 			const pathForMap3 = '@---+B||E--+|E|+--F--+|C|||A--|-----K|||+--E--Ex';
 			expect(pathfinder3.PathString).toBe(pathForMap3);
 		});
-    
+
 		test('should throw error if map has multiple start positions', () => {
 			const pathfinder1 = new Pathfinder(invalidMap1);
 			const error = Error('Invalid map - Multiple start characters found');
@@ -85,5 +85,36 @@ describe('Pathfinder class', () => {
 			expect(() => pathfinder1.PathString).toThrow(error);
 		});
 
+	});
+
+  describe('UniquePathCharacters getter', () => {
+		test('should return unique characters found on path', () => {
+			const pathfinder1 = new Pathfinder(map1);
+			const uniqueCharactersForMap1 = 'ACB';
+			expect(pathfinder1.PathString).toBeTruthy();
+			expect(pathfinder1.UniquePathCharacters).toBe(uniqueCharactersForMap1);
+
+			const pathfinder2 = new Pathfinder(map2);
+			const uniqueCharactersForMap2 = 'ABCD';
+			expect(pathfinder1.PathString).toBeTruthy();
+			expect(pathfinder2.UniquePathCharacters).toBe(uniqueCharactersForMap2);
+
+			const pathfinder3 = new Pathfinder(map3);
+			const uniqueCharactersForMap3 = 'BEEFCAKE';
+			expect(pathfinder1.PathString).toBeTruthy();
+			expect(pathfinder3.UniquePathCharacters).toBe(uniqueCharactersForMap3);
+		});
+
+		test('should throw error if map has multiple start positions', () => {
+			const pathfinder1 = new Pathfinder(invalidMap1);
+			const error = Error('Invalid map - Multiple start characters found');
+			expect(() => pathfinder1.PathString).toThrow(error);
+		});
+
+		test('should throw error if map has no start position', () => {
+			const pathfinder1 = new Pathfinder(invalidMap2);
+			const error = Error('Invalid map - Start character not found');
+			expect(() => pathfinder1.PathString).toThrow(error);
+		});
 	});
 });
