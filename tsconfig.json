@@ -14,8 +14,11 @@
         "src/typings/*"
       ]
     }
-  },
-  "include": [
-    "src/**/*.ts"
-  ],
+    },
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "src/**/*.spec.ts"
+    ]
 }
