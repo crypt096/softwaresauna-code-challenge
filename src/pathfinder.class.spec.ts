@@ -140,6 +140,18 @@ describe('Pathfinder class', () => {
 			const error = Error('Invalid map - Broken path');
 			expect(() => pathfinder1.PathString).toThrow(error);
 		});
+
+		test('should throw error if map has multiple starting paths', () => {
+			const pathfinder1 = new Pathfinder(invalidMap6);
+			const error = Error('Multiple starting paths found');
+			expect(() => pathfinder1.PathString).toThrow(error);
+		});
+
+		test('should throw error if map has fake turn', () => {
+			const pathfinder1 = new Pathfinder(invalidMap7);
+			const error = Error('Invalid map - Fake turn');
+			expect(() => pathfinder1.PathString).toThrow(error);
+		});
 	});
 
   describe('UniquePathCharacters getter', () => {
@@ -187,6 +199,18 @@ describe('Pathfinder class', () => {
 		test('should throw error if map has broken path', () => {
 			const pathfinder1 = new Pathfinder(invalidMap5);
 			const error = Error('Invalid map - Broken path');
+			expect(() => pathfinder1.PathString).toThrow(error);
+		});
+
+		test('should throw error if map has multiple starting paths', () => {
+			const pathfinder1 = new Pathfinder(invalidMap6);
+			const error = Error('Multiple starting paths found');
+			expect(() => pathfinder1.PathString).toThrow(error);
+		});
+
+		test('should throw error if map has fake turn', () => {
+			const pathfinder1 = new Pathfinder(invalidMap7);
+			const error = Error('Invalid map - Fake turn');
 			expect(() => pathfinder1.PathString).toThrow(error);
 		});
 	});
