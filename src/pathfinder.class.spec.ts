@@ -143,7 +143,7 @@ describe('Pathfinder class', () => {
 
 		test('should throw error if map has multiple starting paths', () => {
 			const pathfinder1 = new Pathfinder(invalidMap6);
-			const error = Error('Multiple starting paths found');
+			const error = Error('Invalid map - Multiple starting paths found');
 			expect(() => pathfinder1.PathString).toThrow(error);
 		});
 
@@ -204,7 +204,7 @@ describe('Pathfinder class', () => {
 
 		test('should throw error if map has multiple starting paths', () => {
 			const pathfinder1 = new Pathfinder(invalidMap6);
-			const error = Error('Multiple starting paths found');
+			const error = Error('Invalid map - Multiple starting paths found');
 			expect(() => pathfinder1.PathString).toThrow(error);
 		});
 
