@@ -63,17 +63,11 @@ export class Pathfinder {
 		} else {
 			if (step.char === this.cornerCharacter && nextStep === undefined) {
 				throw new Error('Fork in path!');
-			}
-
-			if (step.direction === null && nextStep === undefined) {
+			} else if (step.direction === null && nextStep === undefined) {
 				throw new Error('Multiple starting paths found');
-			}
-
-			if (step.char === this.cornerCharacter && nextStep === null) {
+			} else if (step.char === this.cornerCharacter && nextStep === null) {
 				throw new Error('Fake turn');
-			}
-
-			if (step.char !== this.endCharacter && nextStep === null) {
+			} else if (step.char !== this.endCharacter && nextStep === null) {
 				throw new Error('Broken path');
 			}
 
