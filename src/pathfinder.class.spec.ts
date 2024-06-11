@@ -64,6 +64,13 @@ const invalidMap4 = `
       +---+
 `;
 
+const invalidMap5 = `
+   @--A-+
+        |
+         
+        B-x
+`;
+
 describe('Pathfinder class', () => {
 	describe('Constructor', () => {
 		test('should create map', () => {
@@ -119,6 +126,12 @@ describe('Pathfinder class', () => {
 			const error = Error('Invalid map - Fork in path');
 			expect(() => pathfinder1.PathString).toThrow(error);
 		});
+
+		test('should throw error if map has broken path', () => {
+			const pathfinder1 = new Pathfinder(invalidMap5);
+			const error = Error('Invalid map - Broken path');
+			expect(() => pathfinder1.PathString).toThrow(error);
+		});
 	});
 
   describe('UniquePathCharacters getter', () => {
@@ -160,6 +173,12 @@ describe('Pathfinder class', () => {
 		test('should throw error if map has fork in path', () => {
 			const pathfinder1 = new Pathfinder(invalidMap4);
 			const error = Error('Invalid map - Fork in path');
+			expect(() => pathfinder1.PathString).toThrow(error);
+		});
+
+		test('should throw error if map has broken path', () => {
+			const pathfinder1 = new Pathfinder(invalidMap5);
+			const error = Error('Invalid map - Broken path');
 			expect(() => pathfinder1.PathString).toThrow(error);
 		});
 	});
