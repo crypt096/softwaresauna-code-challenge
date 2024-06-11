@@ -46,6 +46,6 @@ export class ASCIIMap {
 				return acc;
 			},
 			[] as Position[]
-	);
+		);
 	}
 }
