@@ -4,6 +4,8 @@ Problem description [here](https://github.com/softwaresauna/code-challenge)
 
 ## Solution
 
+Program takes an ASCII Map as an input and it outputs collected letters, path as characters or an error if map is invalid. Program starts with a letter `@` and it ends with a letter `x`. Valid characters are all uppercase letters from `A` to `Z`. Turns could be letters or letter `+`
+
 - Input: ASCII Map
 - Output: 
   - Collected letters
@@ -32,6 +34,6 @@ Proof:
 ![screenshot](./assets/test-coverage/screen2.png)
 
 ## Author
-Name: Aleksandar Cvjetan
-GitHub: crypt096
-Contact info: acvjetan@gmail.com
+- Name: Aleksandar Cvjetan
+- GitHub: crypt096
+- Contact info: acvjetan@gmail.com
