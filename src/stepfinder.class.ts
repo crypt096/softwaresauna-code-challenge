@@ -85,9 +85,8 @@ export class StepFinder {
 		if (potentialSteps && potentialSteps.length === 1) {
 			return potentialSteps[0];
 		} else if (potentialSteps && potentialSteps.length > 1) {
-			if (potentialSteps[0].char === potentialSteps[1].char) {
-				throw new Error();
-			}
+			const newStep = potentialSteps.filter(step => step.direction === currentDirection);
+			return newStep[0];
 		} else {
 			return null;
 		}
