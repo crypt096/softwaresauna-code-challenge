@@ -6,7 +6,8 @@ const map1 = `
           |
   x-B-+   C
       |   |
-      +---+`;
+      +---+
+`;
 
 const map2 = `
   @
@@ -15,7 +16,8 @@ const map2 = `
   +---B--+
     |      x
     |      |
-    +---D--+`;
+    +---D--+
+`;
 
 const map3 = `
   @---+
@@ -26,20 +28,23 @@ K-----|--A
 |  |     |
 +--E--Ex C
    |     |
-   +--F--+`;
+   +--F--+
+`;
 
 const invalidMap1 = `
   @---A---+
           @
   x-B-+   C
-      |   |`;
+      |   |
+`;
 
 const invalidMap2 = `
 K-----|--A
 |     |  |
 |  +--E  |
 |  |     |
-+--E--Ex C`;
++--E--Ex C
+`;
 
 describe('Pathfinder class', () => {
 	describe('Constructor', () => {
