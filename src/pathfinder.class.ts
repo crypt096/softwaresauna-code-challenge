@@ -62,13 +62,13 @@ export class Pathfinder {
 			return [nextStep, ...this.getNextPath(map, nextStep)];
 		} else {
 			if (step.char === this.cornerCharacter && nextStep === undefined) {
-				throw new Error('Fork in path!');
+				throw Error('Invalid map - Fork in path');
 			} else if (step.direction === null && nextStep === undefined) {
-				throw new Error('Multiple starting paths found');
+				throw Error('Invalid map - Multiple starting paths found');
 			} else if (step.char === this.cornerCharacter && nextStep === null) {
-				throw new Error('Fake turn');
+				throw Error('Invalid map - Fake turn');
 			} else if (step.char !== this.endCharacter && nextStep === null) {
-				throw new Error('Broken path');
+				throw Error('Invalid map - Broken path');
 			}
 
 			return [];
