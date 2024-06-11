@@ -46,6 +46,14 @@ K-----|--A
 +--E--Ex C
 `;
 
+const invalidMap3 = `
+   @--A---+
+          |
+    B-+   C
+      |   |
+      +---+
+`;
+
 describe('Pathfinder class', () => {
 	describe('Constructor', () => {
 		test('should create map', () => {
@@ -90,6 +98,12 @@ describe('Pathfinder class', () => {
 			expect(() => pathfinder1.PathString).toThrow(error);
 		});
 
+		test('should throw error if map has no end position', () => {
+			const pathfinder1 = new Pathfinder(invalidMap3);
+			const error = Error('Invalid map - End character not found');
+			expect(() => pathfinder1.PathString).toThrow(error);
+		});
+
 	});
 
   describe('UniquePathCharacters getter', () => {
@@ -119,6 +133,12 @@ describe('Pathfinder class', () => {
 		test('should throw error if map has no start position', () => {
 			const pathfinder1 = new Pathfinder(invalidMap2);
 			const error = Error('Invalid map - Start character not found');
+			expect(() => pathfinder1.PathString).toThrow(error);
+		});
+
+		test('should throw error if map has no end position', () => {
+			const pathfinder1 = new Pathfinder(invalidMap3);
+			const error = Error('Invalid map - End character not found');
 			expect(() => pathfinder1.PathString).toThrow(error);
 		});
 	});
