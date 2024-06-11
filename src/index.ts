@@ -9,7 +9,6 @@ program
   .parse(process.argv);
 
 const options = program.opts();
-const file = options.file || process.env.FILE;
 
 if (!options.file) {
   console.error('Error: You must specify a file using the -f or --file option.');
