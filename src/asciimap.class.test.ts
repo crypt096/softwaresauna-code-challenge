@@ -1,4 +1,5 @@
 import { ASCIIMap } from './asciimap.class';
+import { Position } from './position.interface';
 
 describe('ASCIIMap class', () => {
 	describe('Constructor', () => {
@@ -25,4 +26,41 @@ describe('ASCIIMap class', () => {
 
 	});
 
+  describe('function isPositionWithinMap', () => {
+
+		test('should return true if position within map', () => {
+			const mapData = `---\n---`;
+			const asciiMap = new ASCIIMap(mapData);
+			const testPosition1: Position = {
+				x: 0,
+				y: 0
+			};
+			const isPosition1OnMap = asciiMap.isPositionWithinMap(asciiMap, testPosition1);
+			expect(isPosition1OnMap).toBe(true);
+			const testPosition2: Position = {
+				x: 1,
+				y: 1
+			};
+			const isPosition2OnMap = asciiMap.isPositionWithinMap(asciiMap, testPosition2);
+			expect(isPosition2OnMap).toBe(true);
+		});
+
+		test('should return false if position outside of map', () => {
+			const mapData = `---\n---`;
+			const asciiMap = new ASCIIMap(mapData);
+			const testPosition1: Position = {
+				x: 5,
+				y: 5
+			};
+			const isPosition1OnMap = asciiMap.isPositionWithinMap(asciiMap, testPosition1);
+			expect(isPosition1OnMap).toBe(false);
+			const testPosition2: Position = {
+				x: -5,
+				y: -5
+			};
+			const isPosition2OnMap = asciiMap.isPositionWithinMap(asciiMap, testPosition2);
+			expect(isPosition2OnMap).toBe(false);
+		});
+
+	});
 });
