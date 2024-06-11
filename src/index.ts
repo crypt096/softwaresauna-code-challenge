@@ -18,8 +18,8 @@ if (!options.file) {
 try {
   const content = fs.readFileSync(options.file, { encoding: 'utf8' });
   const pathfinder = new Pathfinder(content);
-  console.log(`Path: ${pathfinder.PathString}`);
-  console.log(`Collected letters: ${pathfinder.UniquePathCharacters}`);
+  console.log(`Letters: ${pathfinder.UniquePathCharacters}`);
+  console.log(`Path as characters: ${pathfinder.PathString}`);
 } catch (error) {
   console.error(`Error: ${error.message}`);
   process.exit(1);
