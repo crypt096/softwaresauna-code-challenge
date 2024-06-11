@@ -8,6 +8,7 @@ export class Pathfinder {
 	private stepFinder: StepFinder;
 	private readonly startCharacter: string = '@';
 	private readonly endCharacter: string = 'x';
+	private readonly cornerCharacter: string = '+';
 	private readonly validAlphaCharacterRegExp: RegExp = new RegExp('^(?![xX])[A-Za-z]$');
 
 	constructor(mapString: string) {
@@ -60,6 +61,22 @@ export class Pathfinder {
 		if (nextStep) {
 			return [nextStep, ...this.getNextPath(map, nextStep)];
 		} else {
+			if (step.char === this.cornerCharacter && nextStep === undefined) {
+				throw new Error('Fork in path!');
+			}
+
+			if (step.direction === null && nextStep === undefined) {
+				throw new Error('Multiple starting paths found');
+			}
+
+			if (step.char === this.cornerCharacter && nextStep === null) {
+				throw new Error('Fake turn');
+			}
+
+			if (step.char !== this.endCharacter && nextStep === null) {
+				throw new Error('Broken path');
+			}
+
 			return [];
 		}
 	}
