@@ -63,4 +63,45 @@ describe('ASCIIMap class', () => {
 		});
 
 	});
+
+  describe('function getCharacterAtPosition', () => {
+
+		test('should return character at map position', () => {
+			const mapData = `--@--\n-x----`;
+			const asciiMap = new ASCIIMap(mapData);
+			const testPosition1: Position = {
+				x: 2,
+				y: 0
+			};
+			const testPosition2: Position = {
+				x: 1,
+				y: 1
+			};
+			const charAtPosition1 = asciiMap.getCharacterAtPosition(asciiMap, testPosition1);
+			const charAtPosition2 = asciiMap.getCharacterAtPosition(asciiMap, testPosition2);
+
+			expect(charAtPosition1).toBe('@');
+			expect(charAtPosition2).toBe('x');
+
+		});
+
+		test('should return null if character not found', () => {
+			const mapData = `--@--\n-x----`;
+			const asciiMap = new ASCIIMap(mapData);
+			const testPosition1: Position = {
+				x: 12,
+				y: 10
+			};
+			const testPosition2: Position = {
+				x: -11,
+				y: -11
+			};
+			const charAtPosition1 = asciiMap.getCharacterAtPosition(asciiMap, testPosition1);
+			const charAtPosition2 = asciiMap.getCharacterAtPosition(asciiMap, testPosition2);
+
+			expect(charAtPosition1).toBe(null);
+			expect(charAtPosition2).toBe(null);
+
+		});
+	});
 });
