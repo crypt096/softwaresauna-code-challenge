@@ -71,6 +71,14 @@ const invalidMap5 = `
         B-x
 `;
 
+const invalidMap6 = `
+  x-B-@-A-x
+`;
+
+const invalidMap7 = `
+  @-A-+-B-x
+`;
+
 describe('Pathfinder class', () => {
 	describe('Constructor', () => {
 		test('should create map', () => {
