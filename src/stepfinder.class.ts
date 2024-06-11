@@ -26,6 +26,7 @@ export class StepFinder {
 
 			case this.endCharacter:
 				return [];
+
 			default:
 				return [step.direction, ...this.turnCorner(step.direction)];
 		}
