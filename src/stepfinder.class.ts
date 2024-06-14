@@ -77,10 +77,11 @@ export class StepFinder {
 	}
 
 	private isValidPosition(map: ASCIIMap, position: Position): boolean {
-		const isPositionWithinMap = map.isPositionWithinMap(map, position);
-		const isPathCharacter = map.getCharacterAtPosition(map, position) !== this.noPathCharacter;
-		return isPositionWithinMap && isPathCharacter;
+    const isPositionWithinMap = map.isPositionWithinMap(map, position);
+    const isPathCharacter = map.getCharacterAtPosition(map, position) !== this.noPathCharacter;
+    return isPositionWithinMap && isPathCharacter;
 	}
+
 
 	private parsePotentialSteps(potentialSteps: Step[], currentDirection: Direction): Step {
 		if (potentialSteps && potentialSteps.length === 1) {
