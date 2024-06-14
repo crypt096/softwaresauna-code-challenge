@@ -3,8 +3,7 @@ import { ASCIIMap } from './asciimap.class';
 import { Step } from './step.interface';
 import { Direction } from './direction.enum';
 
-const startPathMapMap = `
-
+const startPathMapString = `
   @`;
 
 const horizontalMapString = `---`;
@@ -18,6 +17,7 @@ const horizontalCornerMap = `
 -+
  |
 `;
+
 const verticalCornerMap = `
 |
 +-
@@ -29,36 +29,35 @@ const charSameDirectionAlphabetMap = `
  |
 `;
 
-const charCornerAlphabetnMap = `
-
+const charCornerAlphabetMap = `
 -F
  |
 `;
 
-const endPathMapMap = `
-
+const endPathMapString = `
   x`;
 
-describe('Pathfinder class', () => {
+describe('StepFinder class', () => {
 	describe('getNextStep function', () => {
+
 		test('should return start step without direction if no previous step defined', () => {
 			const stepfinder = new StepFinder();
-			const map = new ASCIIMap(startPathMapMap);
+			const map = new ASCIIMap(startPathMapString);
 			const currentStep: Step | undefined = undefined;
 			const expectedNextStep: Step = {
 				char: '@',
 				direction: null,
 				position: {
 					x: 2,
-					y: 2
+					y: 1
 				}
 			};
 			const nextStep = stepfinder.getNextStep(map, currentStep);
-			expect(nextStep.position.x).toBe(expectedNextStep.position.x);
-			expect(nextStep.position.y).toBe(expectedNextStep.position.y);
+			expect(nextStep.position).toEqual(expectedNextStep.position);
 			expect(nextStep.char).toBe(expectedNextStep.char);
 			expect(nextStep.direction).toBe(expectedNextStep.direction);
 		});
+
 		test('should return step right from current position if current step is on - character and direction is right', () => {
 			const stepfinder = new StepFinder();
 			const map = new ASCIIMap(horizontalMapString);
@@ -79,11 +78,9 @@ describe('Pathfinder class', () => {
 				}
 			};
 			const nextStep = stepfinder.getNextStep(map, currentStep);
-			expect(nextStep.position.x).toBe(expectedNextStep.position.x);
-			expect(nextStep.position.y).toBe(expectedNextStep.position.y);
-			expect(nextStep.char).toBe(expectedNextStep.char);
-			expect(nextStep.direction).toBe(expectedNextStep.direction);
+			expect(nextStep).toEqual(expectedNextStep);
 		});
+
 		test('should return step left from current position if current step is on - character and direction is left', () => {
 			const stepfinder = new StepFinder();
 			const map = new ASCIIMap(horizontalMapString);
@@ -104,11 +101,9 @@ describe('Pathfinder class', () => {
 				}
 			};
 			const nextStep = stepfinder.getNextStep(map, currentStep);
-			expect(nextStep.position.x).toBe(expectedNextStep.position.x);
-			expect(nextStep.position.y).toBe(expectedNextStep.position.y);
-			expect(nextStep.char).toBe(expectedNextStep.char);
-			expect(nextStep.direction).toBe(expectedNextStep.direction);
+			expect(nextStep).toEqual(expectedNextStep);
 		});
+
 		test('should return step up from current position if current step is on | character and direction is up', () => {
 			const stepfinder = new StepFinder();
 			const map = new ASCIIMap(verticalMapString);
@@ -129,11 +124,9 @@ describe('Pathfinder class', () => {
 				}
 			};
 			const nextStep = stepfinder.getNextStep(map, currentStep);
-			expect(nextStep.position.x).toBe(expectedNextStep.position.x);
-			expect(nextStep.position.y).toBe(expectedNextStep.position.y);
-			expect(nextStep.char).toBe(expectedNextStep.char);
-			expect(nextStep.direction).toBe(expectedNextStep.direction);
+			expect(nextStep).toEqual(expectedNextStep);
 		});
+
 		test('should return step down from current position if current step is on | character and direction is down', () => {
 			const stepfinder = new StepFinder();
 			const map = new ASCIIMap(verticalMapString);
@@ -154,13 +147,10 @@ describe('Pathfinder class', () => {
 				}
 			};
 			const nextStep = stepfinder.getNextStep(map, currentStep);
-			expect(nextStep.position.x).toBe(expectedNextStep.position.x);
-			expect(nextStep.position.y).toBe(expectedNextStep.position.y);
-			expect(nextStep.char).toBe(expectedNextStep.char);
-			expect(nextStep.direction).toBe(expectedNextStep.direction);
+			expect(nextStep).toEqual(expectedNextStep);
 		});
 
-		test('should turn corner and find vertical path if current step is on + character and direction is left or right', () => {
+		test('should turn corner and find vertical path if current step is on + character and direction is right', () => {
 			const stepfinder = new StepFinder();
 			const map = new ASCIIMap(horizontalCornerMap);
 			const currentStep: Step = {
@@ -180,13 +170,10 @@ describe('Pathfinder class', () => {
 				}
 			};
 			const nextStep = stepfinder.getNextStep(map, currentStep);
-			expect(nextStep.position.x).toBe(expectedNextStep.position.x);
-			expect(nextStep.position.y).toBe(expectedNextStep.position.y);
-			expect(nextStep.char).toBe(expectedNextStep.char);
-			expect(nextStep.direction).toBe(expectedNextStep.direction);
+			expect(nextStep).toEqual(expectedNextStep);
 		});
 
-		test('should turn corner and find horizontal path if current step is on + character and direction is up or down', () => {
+		test('should turn corner and find horizontal path if current step is on + character and direction is down', () => {
 			const stepfinder = new StepFinder();
 			const map = new ASCIIMap(verticalCornerMap);
 			const currentStep: Step = {
@@ -206,12 +193,10 @@ describe('Pathfinder class', () => {
 				}
 			};
 			const nextStep = stepfinder.getNextStep(map, currentStep);
-			expect(nextStep.position.x).toBe(expectedNextStep.position.x);
-			expect(nextStep.position.y).toBe(expectedNextStep.position.y);
-			expect(nextStep.char).toBe(expectedNextStep.char);
-			expect(nextStep.direction).toBe(expectedNextStep.direction);
+			expect(nextStep).toEqual(expectedNextStep);
 		});
-		test('should try to go in same direction if posible if current step is on alphabet character ', () => {
+
+		test('should try to go in same direction if current step is on alphabet character and direction is right', () => {
 			const stepfinder = new StepFinder();
 			const map = new ASCIIMap(charSameDirectionAlphabetMap);
 			const currentStep: Step = {
@@ -231,15 +216,12 @@ describe('Pathfinder class', () => {
 				}
 			};
 			const nextStep = stepfinder.getNextStep(map, currentStep);
-			expect(nextStep.position.x).toBe(expectedNextStep.position.x);
-			expect(nextStep.position.y).toBe(expectedNextStep.position.y);
-			expect(nextStep.char).toBe(expectedNextStep.char);
-			expect(nextStep.direction).toBe(expectedNextStep.direction);
+			expect(nextStep).toEqual(expectedNextStep);
 		});
 
-		test('should try to turn corner if there is no path in same direction and current step is on alphabet character ', () => {
+		test('should try to turn corner if there is no path in same direction and current step is on alphabet character', () => {
 			const stepfinder = new StepFinder();
-			const map = new ASCIIMap(charCornerAlphabetnMap);
+			const map = new ASCIIMap(charCornerAlphabetMap);
 			const currentStep: Step = {
 				char: 'F',
 				direction: Direction.RIGHT,
@@ -257,25 +239,22 @@ describe('Pathfinder class', () => {
 				}
 			};
 			const nextStep = stepfinder.getNextStep(map, currentStep);
-			expect(nextStep.position.x).toBe(expectedNextStep.position.x);
-			expect(nextStep.position.y).toBe(expectedNextStep.position.y);
-			expect(nextStep.char).toBe(expectedNextStep.char);
-			expect(nextStep.direction).toBe(expectedNextStep.direction);
+			expect(nextStep).toEqual(expectedNextStep);
 		});
-		test('should return null if on x character ', () => {
+
+		test('should return null if on x character', () => {
 			const stepfinder = new StepFinder();
-			const map = new ASCIIMap(endPathMapMap);
+			const map = new ASCIIMap(endPathMapString);
 			const currentStep: Step = {
 				char: 'x',
 				direction: Direction.RIGHT,
 				position: {
 					x: 2,
-					y: 2
+					y: 1
 				}
 			};
-			const expectedNextStep: Step | null = null;
 			const nextStep = stepfinder.getNextStep(map, currentStep);
-			expect(nextStep).toBe(expectedNextStep);
+			expect(nextStep).toBeNull();
 		});
 	});
 });
