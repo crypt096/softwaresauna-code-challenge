@@ -13,23 +13,23 @@ export class StepFinder {
 
 	private findPossibleDirections(map: ASCIIMap, step: Step): Direction[] {
 		const characterAtPosition = map.getCharacterAtPosition(map, step.position);
-		switch (characterAtPosition) {
-			case this.startCharacter:
-				return [Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT];
+    switch (characterAtPosition) {
+        case this.startCharacter:
+            return [Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT];
 
-			case this.horizontalDirectionCharacter:
-			case this.verticalDirectionCharacter:
-				return [step.direction];
+        case this.horizontalDirectionCharacter:
+        case this.verticalDirectionCharacter:
+            return [step.direction];
 
-			case this.cornerCharacter:
-				return this.turnCorner(step.direction);
+        case this.cornerCharacter:
+            return this.turnCorner(step.direction);
 
-			case this.endCharacter:
-				return [];
+        case this.endCharacter:
+            return [];
 
-			default:
-				return [step.direction, ...this.turnCorner(step.direction)];
-		}
+        default:
+            return [step.direction, ...this.turnCorner(step.direction)];
+    }
 	}
 
 	private turnCorner(direction: Direction): Direction[] {
