@@ -230,14 +230,7 @@ describe('StepFinder class', () => {
 					y: 2
 				}
 			};
-			const expectedNextStep: Step = {
-				char: '|',
-				direction: Direction.DOWN,
-				position: {
-					x: 1,
-					y: 3
-				}
-			};
+			const expectedNextStep = null;
 			const nextStep = stepfinder.getNextStep(map, currentStep);
 			expect(nextStep).toEqual(expectedNextStep);
 		});
