@@ -33,7 +33,7 @@ export class StepFinder {
 	}
 
 	private turnCorner(direction: Direction): Direction[] {
-		switch (direction) {
+    switch (direction) {
 			case Direction.LEFT:
 			case Direction.RIGHT:
 				return [Direction.UP, Direction.DOWN];
@@ -41,8 +41,9 @@ export class StepFinder {
 			case Direction.UP:
 			case Direction.DOWN:
 				return [Direction.LEFT, Direction.RIGHT];
-		}
-	}
+    }
+}
+
 
 	private findNextPositionBasedOnDirection(startPosition: Position, direction: Direction): Position {
 		switch (direction) {
