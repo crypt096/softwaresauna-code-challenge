@@ -1,6 +1,7 @@
 import { Pathfinder } from './pathfinder.class';
 import { ASCIIMap } from './asciimap.class';
 
+// Define the test maps
 const map1 = `
   @---A---+
           |
@@ -31,30 +32,29 @@ K-----|--A
    +--F--+
 `;
 
-const invalidMap1 = `
+// Define invalid test maps
+const invalidMaps = [
+    { map: `
   @---A---+
           @
   x-B-+   C
       |   |
-`;
-
-const invalidMap2 = `
+`, error: 'Invalid map - Multiple start characters found' },
+    { map: `
 K-----|--A
 |     |  |
 |  +--E  |
 |  |     |
 +--E--Ex C
-`;
-
-const invalidMap3 = `
+`, error: 'Invalid map - Start character not found' },
+    { map: `
    @--A---+
           |
     B-+   C
       |   |
       +---+
-`;
-
-const invalidMap4 = `
+`, error: 'Invalid map - End character not found' },
+    { map: `
         x-B
           |
    @--A---+
@@ -62,156 +62,76 @@ const invalidMap4 = `
      x+   C
       |   |
       +---+
-`;
-
-const invalidMap5 = `
+`, error: 'Invalid map - Fork in path' },
+    { map: `
    @--A-+
         |
          
         B-x
-`;
-
-const invalidMap6 = `
+`, error: 'Invalid map - Broken path' },
+    { map: `
   x-B-@-A-x
-`;
-
-const invalidMap7 = `
+`, error: 'Invalid map - Multiple starting paths found' },
+    { map: `
   @-A-+-B-x
-`;
+`, error: 'Invalid map - Fake turn' }
+];
 
 describe('Pathfinder class', () => {
-	describe('Constructor', () => {
-		test('should create map', () => {
-			const pathfinder = new Pathfinder(map1);
-			expect(pathfinder.Map).toBeTruthy();
-			expect(pathfinder.Map).toBeInstanceOf(ASCIIMap);
-		});
-	});
+    describe('Constructor', () => {
+        test('should create map', () => {
+            const pathfinder = new Pathfinder(map1);
+            expect(pathfinder.Map).toBeTruthy();
+            expect(pathfinder.Map).toBeInstanceOf(ASCIIMap);
+        });
+    });
 
-  describe('Map getter', () => {
-		test('should return map class', () => {
-			const pathfinder = new Pathfinder(map1);
-			expect(pathfinder.Map.MapData).toBe(map1);
-		});
-	});
+    describe('Map getter', () => {
+        test('should return map class', () => {
+            const pathfinder = new Pathfinder(map1);
+            expect(pathfinder.Map.MapData).toBe(map1);
+        });
+    });
 
-  describe('PathString getter', () => {
+    describe('PathString getter', () => {
+        test('should return string of characters found on path', () => {
+            const pathfinder1 = new Pathfinder(map1);
+            const pathForMap1 = '@---A---+|C|+---+|+-B-x';
+            expect(pathfinder1.PathString).toBe(pathForMap1);
 
-		test('should return string of characters found on path', () => {
-			const pathfinder1 = new Pathfinder(map1);
-			const pathForMap1 = '@---A---+|C|+---+|+-B-x';
-			expect(pathfinder1.PathString).toBe(pathForMap1);
+            const pathfinder2 = new Pathfinder(map2);
+            const pathForMap2 = '@|A+---B--+|+----C|-||+---D--+|x';
+            expect(pathfinder2.PathString).toBe(pathForMap2);
 
-			const pathfinder2 = new Pathfinder(map2);
-			const pathForMap2 = '@|A+---B--+|+----C|-||+---D--+|x';
-			expect(pathfinder2.PathString).toBe(pathForMap2);
+            const pathfinder3 = new Pathfinder(map3);
+            const pathForMap3 = '@---+B||E--+|E|+--F--+|C|||A--|-----K|||+--E--Ex';
+            expect(pathfinder3.PathString).toBe(pathForMap3);
+        });
 
-			const pathfinder3 = new Pathfinder(map3);
-			const pathForMap3 = '@---+B||E--+|E|+--F--+|C|||A--|-----K|||+--E--Ex';
-			expect(pathfinder3.PathString).toBe(pathForMap3);
-		});
+        invalidMaps.forEach(({ map, error }) => {
+            test(`should throw error if map is invalid: ${error}`, () => {
+                const pathfinder = new Pathfinder(map);
+                expect(() => pathfinder.PathString).toThrowError(error);
+            });
+        });
+    });
 
-		test('should throw error if map has multiple start positions', () => {
-			const pathfinder1 = new Pathfinder(invalidMap1);
-			const error = Error('Invalid map - Multiple start characters found');
-			expect(() => pathfinder1.PathString).toThrow(error);
-		});
+    describe('UniquePathCharacters getter', () => {
+			test('should return unique characters found on path', () => {
+					const pathfinder1 = new Pathfinder(map1);
+					const uniqueCharactersForMap1 = 'ACB';
+					expect(pathfinder1.PathString).toBeTruthy();
+					expect(pathfinder1.UniquePathCharacters).toBe(uniqueCharactersForMap1);
 
-		test('should throw error if map has no start position', () => {
-			const pathfinder1 = new Pathfinder(invalidMap2);
-			const error = Error('Invalid map - Start character not found');
-			expect(() => pathfinder1.PathString).toThrow(error);
-		});
+					const pathfinder2 = new Pathfinder(map2);
+					const uniqueCharactersForMap2 = 'ABCD';
+					expect(pathfinder2.PathString).toBeTruthy();
+					expect(pathfinder2.UniquePathCharacters).toBe(uniqueCharactersForMap2);
 
-		test('should throw error if map has no end position', () => {
-			const pathfinder1 = new Pathfinder(invalidMap3);
-			const error = Error('Invalid map - End character not found');
-			expect(() => pathfinder1.PathString).toThrow(error);
-		});
-
-		test('should throw error if map has fork in path', () => {
-			const pathfinder1 = new Pathfinder(invalidMap4);
-			const error = Error('Invalid map - Fork in path');
-			expect(() => pathfinder1.PathString).toThrow(error);
-		});
-
-		test('should throw error if map has broken path', () => {
-			const pathfinder1 = new Pathfinder(invalidMap5);
-			const error = Error('Invalid map - Broken path');
-			expect(() => pathfinder1.PathString).toThrow(error);
-		});
-
-		test('should throw error if map has multiple starting paths', () => {
-			const pathfinder1 = new Pathfinder(invalidMap6);
-			const error = Error('Invalid map - Multiple starting paths found');
-			expect(() => pathfinder1.PathString).toThrow(error);
-		});
-
-		test('should throw error if map has fake turn', () => {
-			const pathfinder1 = new Pathfinder(invalidMap7);
-			const error = Error('Invalid map - Fake turn');
-			expect(() => pathfinder1.PathString).toThrow(error);
-		});
-	});
-
-  describe('UniquePathCharacters getter', () => {
-		test('should return unique characters found on path', () => {
-			const pathfinder1 = new Pathfinder(map1);
-			const uniqueCharactersForMap1 = 'ACB';
-			expect(pathfinder1.PathString).toBeTruthy();
-			expect(pathfinder1.UniquePathCharacters).toBe(uniqueCharactersForMap1);
-
-			const pathfinder2 = new Pathfinder(map2);
-			const uniqueCharactersForMap2 = 'ABCD';
-			expect(pathfinder1.PathString).toBeTruthy();
-			expect(pathfinder2.UniquePathCharacters).toBe(uniqueCharactersForMap2);
-
-			const pathfinder3 = new Pathfinder(map3);
-			const uniqueCharactersForMap3 = 'BEEFCAKE';
-			expect(pathfinder1.PathString).toBeTruthy();
-			expect(pathfinder3.UniquePathCharacters).toBe(uniqueCharactersForMap3);
-		});
-
-		test('should throw error if map has multiple start positions', () => {
-			const pathfinder1 = new Pathfinder(invalidMap1);
-			const error = Error('Invalid map - Multiple start characters found');
-			expect(() => pathfinder1.PathString).toThrow(error);
-		});
-
-		test('should throw error if map has no start position', () => {
-			const pathfinder1 = new Pathfinder(invalidMap2);
-			const error = Error('Invalid map - Start character not found');
-			expect(() => pathfinder1.PathString).toThrow(error);
-		});
-
-		test('should throw error if map has no end position', () => {
-			const pathfinder1 = new Pathfinder(invalidMap3);
-			const error = Error('Invalid map - End character not found');
-			expect(() => pathfinder1.PathString).toThrow(error);
-		});
-
-		test('should throw error if map has fork in path', () => {
-			const pathfinder1 = new Pathfinder(invalidMap4);
-			const error = Error('Invalid map - Fork in path');
-			expect(() => pathfinder1.PathString).toThrow(error);
-		});
-
-		test('should throw error if map has broken path', () => {
-			const pathfinder1 = new Pathfinder(invalidMap5);
-			const error = Error('Invalid map - Broken path');
-			expect(() => pathfinder1.PathString).toThrow(error);
-		});
-
-		test('should throw error if map has multiple starting paths', () => {
-			const pathfinder1 = new Pathfinder(invalidMap6);
-			const error = Error('Invalid map - Multiple starting paths found');
-			expect(() => pathfinder1.PathString).toThrow(error);
-		});
-
-		test('should throw error if map has fake turn', () => {
-			const pathfinder1 = new Pathfinder(invalidMap7);
-			const error = Error('Invalid map - Fake turn');
-			expect(() => pathfinder1.PathString).toThrow(error);
-		});
+					const pathfinder3 = new Pathfinder(map3);
+					const uniqueCharactersForMap3 = 'BEEFCAKE';
+					expect(pathfinder3.PathString).toBeTruthy();
+					expect(pathfinder3.UniquePathCharacters).toBe(uniqueCharactersForMap3);
+			});
 	});
 });
