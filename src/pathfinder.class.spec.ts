@@ -2,15 +2,20 @@ import { Pathfinder } from './pathfinder.class';
 import { ASCIIMap } from './asciimap.class';
 
 // Define the test maps
-const map1 = `
+const validMaps = [
+    {
+        map: `
   @---A---+
           |
   x-B-+   C
       |   |
       +---+
-`;
-
-const map2 = `
+`,
+        pathString: '@---A---+|C|+---+|+-B-x',
+        uniqueCharacters: 'ACB'
+    },
+    {
+        map: `
   @
   | C----+
   A |    |
@@ -18,9 +23,12 @@ const map2 = `
     |      x
     |      |
     +---D--+
-`;
-
-const map3 = `
+`,
+        pathString: '@|A+---B--+|+----C|-||+---D--+|x',
+        uniqueCharacters: 'ABCD'
+    },
+    {
+        map: `
   @---+
       B
 K-----|--A
@@ -30,9 +38,12 @@ K-----|--A
 +--E--Ex C
    |     |
    +--F--+
-`;
+`,
+        pathString: '@---+B||E--+|E|+--F--+|C|||A--|-----K|||+--E--Ex',
+        uniqueCharacters: 'BEEFCAKE'
+    }
+];
 
-// Define invalid test maps
 const invalidMaps = [
     { map: `
   @---A---+
@@ -80,7 +91,7 @@ K-----|--A
 describe('Pathfinder class', () => {
     describe('Constructor', () => {
         test('should create map', () => {
-            const pathfinder = new Pathfinder(map1);
+            const pathfinder = new Pathfinder(validMaps[0].map);
             expect(pathfinder.Map).toBeTruthy();
             expect(pathfinder.Map).toBeInstanceOf(ASCIIMap);
         });
@@ -88,50 +99,34 @@ describe('Pathfinder class', () => {
 
     describe('Map getter', () => {
         test('should return map class', () => {
-            const pathfinder = new Pathfinder(map1);
-            expect(pathfinder.Map.MapData).toBe(map1);
+            const pathfinder = new Pathfinder(validMaps[0].map);
+            expect(pathfinder.Map.MapData).toBe(validMaps[0].map);
         });
     });
 
     describe('PathString getter', () => {
-        test('should return string of characters found on path', () => {
-            const pathfinder1 = new Pathfinder(map1);
-            const pathForMap1 = '@---A---+|C|+---+|+-B-x';
-            expect(pathfinder1.PathString).toBe(pathForMap1);
-
-            const pathfinder2 = new Pathfinder(map2);
-            const pathForMap2 = '@|A+---B--+|+----C|-||+---D--+|x';
-            expect(pathfinder2.PathString).toBe(pathForMap2);
-
-            const pathfinder3 = new Pathfinder(map3);
-            const pathForMap3 = '@---+B||E--+|E|+--F--+|C|||A--|-----K|||+--E--Ex';
-            expect(pathfinder3.PathString).toBe(pathForMap3);
+        validMaps.forEach(({ map, pathString }, index) => {
+            test(`should return string of characters found on path for valid map ${index + 1}`, () => {
+                const pathfinder = new Pathfinder(map);
+                expect(pathfinder.PathString).toBe(pathString);
+            });
         });
 
-        invalidMaps.forEach(({ map, error }) => {
-            test(`should throw error if map is invalid: ${error}`, () => {
+        invalidMaps.forEach(({ map, error }, index) => {
+            test(`should throw error if map is invalid (${index + 1}): ${error}`, () => {
                 const pathfinder = new Pathfinder(map);
-                expect(() => pathfinder.PathString).toThrowError(error);
+                expect(() => pathfinder.PathString).toThrow(error);
             });
         });
     });
 
     describe('UniquePathCharacters getter', () => {
-			test('should return unique characters found on path', () => {
-					const pathfinder1 = new Pathfinder(map1);
-					const uniqueCharactersForMap1 = 'ACB';
-					expect(pathfinder1.PathString).toBeTruthy();
-					expect(pathfinder1.UniquePathCharacters).toBe(uniqueCharactersForMap1);
-
-					const pathfinder2 = new Pathfinder(map2);
-					const uniqueCharactersForMap2 = 'ABCD';
-					expect(pathfinder2.PathString).toBeTruthy();
-					expect(pathfinder2.UniquePathCharacters).toBe(uniqueCharactersForMap2);
-
-					const pathfinder3 = new Pathfinder(map3);
-					const uniqueCharactersForMap3 = 'BEEFCAKE';
-					expect(pathfinder3.PathString).toBeTruthy();
-					expect(pathfinder3.UniquePathCharacters).toBe(uniqueCharactersForMap3);
-			});
-	});
+        validMaps.forEach(({ map, uniqueCharacters }, index) => {
+            test(`should return unique characters found on path for valid map ${index + 1}`, () => {
+                const pathfinder = new Pathfinder(map);
+                expect(pathfinder.PathString).toBeTruthy();
+                expect(pathfinder.UniquePathCharacters).toBe(uniqueCharacters);
+            });
+        });
+    });
 });

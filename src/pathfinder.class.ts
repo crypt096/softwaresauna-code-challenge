@@ -9,7 +9,7 @@ export class Pathfinder {
 	private readonly startCharacter: string = '@';
 	private readonly endCharacter: string = 'x';
 	private readonly cornerCharacter: string = '+';
-	private readonly validAlphaCharacterRegExp: RegExp = new RegExp('^(?![xX])[A-Za-z]$');
+	private readonly validAlphaCharacterRegExp: RegExp = new RegExp('^(?![xX])[A-Z]$');
 
 	constructor(mapString: string) {
 		this.map = new ASCIIMap(mapString);
